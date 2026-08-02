@@ -1,0 +1,24 @@
+{
+  "name": "impex-lsp",
+  "version": "0.1.0",
+  "description": "An ImpEx language server, validator and test harness for SAP Commerce — autocomplete, static validation and CI linting for a runtime-only DSL.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Aliaksandr Tsviatkou",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "dev": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --ext .ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "eslint": "^9.0.0",
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  }
+}
