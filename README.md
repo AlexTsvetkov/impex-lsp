@@ -62,6 +62,19 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md). Conventional commits; generated code s
 
 [MIT](./LICENSE) © 2026 Aliaksandr Tsviatkou
 
+## Honest assessment
+
+> From the v2 self-critical analysis. Scores use **Gap · Value · Moat · Time-to-revenue · Risk** (for Risk, **higher = safer**). Prior art is named deliberately — "no competitor" is almost never true.
+
+**Scores:** Gap 4 · Value 3 · Moat 2 · TTR 4 · Risk 4
+
+- **Prior art / competition.** Primitive IDE plugins exist; none do schema-aware validation against a live model or CI linting.
+- **True differentiator.** The type-model-aware validator + CI linter. The LSP itself is table stakes.
+- **Kill criterion.** If teams won't run it in CI (the only sticky part), it's a nice free tool, not a business.
+- **Verdict.** **Ship as an OSS funnel**, not a standalone product.
+
+See the full landscape, go-to-market and the **IP / conflict-of-interest** discussion in [sap-commerce-general-ideas-for-startup.md](https://github.com/AlexTsvetkov/sap-commerce-ideas-for-projects/blob/main/ideas-for-startup/sap-commerce-general-ideas-for-startup.md).
+
 ---
 
 *Part of a backend tooling suite for SAP Commerce Cloud. See [`commerce-mcp`](https://github.com/AlexTsvetkov/commerce-mcp) for the AI-native flagship.*
