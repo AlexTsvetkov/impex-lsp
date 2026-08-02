@@ -2,6 +2,8 @@
 
 **An ImpEx language server, validator and test harness for SAP Commerce — autocomplete, static validation and CI linting for a runtime-only DSL.**
 
+**🌐 Live site: https://alextsvetkov.github.io/impex-lsp/**
+
 > ⚠️ **Status:** early scaffold. The core abstraction, a starter implementation and tests are real; this is a foundation to build on, not a finished product. See [Roadmap](#roadmap).
 
 **Stack:** Node 20 + TypeScript.
