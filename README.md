@@ -4,7 +4,7 @@
 
 **🌐 Live site: https://alextsvetkov.github.io/impex-lsp/**
 
-> ⚠️ **Status:** early scaffold. The core abstraction, a starter implementation and tests are real; this is a foundation to build on, not a finished product. See [Roadmap](#roadmap).
+> ✅ **Status:** working core. A real, tested implementation of the core capability runs offline (no live SAP Commerce instance needed); unit tests pass in CI. Not yet a production product — see [Roadmap](#roadmap) for what would make it one.
 
 **Stack:** Node 20 + TypeScript.
 
@@ -50,7 +50,8 @@ npm test
 
 ## Roadmap
 
-- [ ] Flesh out the core beyond the starter implementation.
+- [x] Implement the core capability with real logic + unit tests.
+- [ ] Broaden coverage (more rules/edge cases) beyond the first working version.
 - [ ] Wire against a live SAP Commerce / BTP environment.
 - [ ] Publish artifacts and usage docs.
 
