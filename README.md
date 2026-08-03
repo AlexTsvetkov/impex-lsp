@@ -152,7 +152,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md). Conventional commits; generated code s
 - **Kill criterion.** If teams won't run it in CI (the only sticky part), it's a nice free tool, not a business.
 - **Verdict.** **Ship as an OSS funnel**, not a standalone product.
 
-See the full landscape, go-to-market and the **IP / conflict-of-interest** discussion in [sap-commerce-general-ideas-for-startup.md](https://github.com/AlexTsvetkov/sap-commerce-ideas-for-projects/blob/main/ideas-for-startup/sap-commerce-general-ideas-for-startup.md).
+This assessment is part of a broader, self-critical analysis of the whole tool suite (problem landscape, go-to-market, and an IP / conflict-of-interest review) maintained privately by the author.
 
 ---
 
