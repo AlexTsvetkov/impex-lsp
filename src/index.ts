@@ -23,6 +23,19 @@ export {
   type TypeModel,
 };
 
+export {
+  HybrisTypeModelSource,
+  hacConfigFromEnv,
+  validateAgainstLive,
+  buildTypeModel,
+  qualifiersFromFlexResult,
+  extractReferencedTypeCodes,
+  extractInputCsrf,
+  extractMetaCsrf,
+  type HacConfig,
+  type FlexResult,
+} from "./live-model.js";
+
 /**
  * Statically validates an ImpEx document against a type-model snapshot and
  * returns line-anchored diagnostics.

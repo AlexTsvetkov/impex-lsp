@@ -48,6 +48,84 @@ npm run build
 npm test
 ```
 
+## Usage
+
+These snippets are distilled from the runnable examples below; the `Output:` blocks are the real captured stdout.
+
+### Validate a script — clean vs. broken
+
+```ts
+import { validate } from "impex-lsp";
+
+// A structurally valid script → no diagnostics.
+const clean = [
+  "INSERT_UPDATE Product;code[unique=true];name[lang=en]",
+  ";PROD-001;Sample Product",
+].join("\n");
+console.log("clean:", validate(clean));
+
+// A value line with more cells than the header declares → one error.
+const broken = [
+  "INSERT_UPDATE Product;code[unique=true];name",
+  ";PROD-1;Widget;EXTRA-COLUMN",
+].join("\n");
+for (const d of validate(broken)) {
+  console.log(`[${d.severity}] line ${d.line} ${d.code}: ${d.message}`);
+}
+```
+
+Output:
+
+```text
+clean: []
+[error] line 2 IMPEX_COLUMN_COUNT_MISMATCH: Value line has 3 field(s) but the header (line 1) declares 2 column(s).
+```
+
+### Validate against a `TypeModel` — catch unknown attributes
+
+```ts
+import { validate, type TypeModel } from "impex-lsp";
+
+const model: TypeModel = {
+  Product: new Set(["code", "name", "catalogVersion"]),
+};
+
+// `colour` and `weight` aren't defined on Product → warnings.
+const script = [
+  "INSERT_UPDATE Product;code[unique=true];name;colour;weight",
+  ";PROD-1;Widget;red;3kg",
+].join("\n");
+for (const d of validate(script, model)) {
+  console.log(`[${d.severity}] line ${d.line} ${d.code}: ${d.message}`);
+}
+```
+
+Output:
+
+```text
+[warning] line 1 IMPEX_UNKNOWN_ATTRIBUTE: Attribute "colour" is not defined on type "Product".
+[warning] line 1 IMPEX_UNKNOWN_ATTRIBUTE: Attribute "weight" is not defined on type "Product".
+```
+
+## Examples
+
+Runnable, heavily-commented tutorials live in [`examples/`](./examples/). Each is a
+self-contained mini-lesson you run with `tsx` (already a dev dependency) — no build step:
+
+| Example | Run it | Teaches |
+|---------|--------|---------|
+| `examples/01-validate-impex.ts` | `npx tsx examples/01-validate-impex.ts` | Static validation with no type model: a clean script plus one broken script per structural diagnostic (unknown mode, header-no-type, value-before-header, column-count mismatch, unknown macro). |
+| `examples/02-with-type-model.ts` | `npx tsx examples/02-with-type-model.ts` | Passing a `TypeModel` to unlock `IMPEX_UNKNOWN_TYPE` (error) and `IMPEX_UNKNOWN_ATTRIBUTE` (warning) checks, plus the `ImpexValidator` facade. |
+| `examples/03-live-model.ts` | `npx tsx examples/03-live-model.ts` | Building the `TypeModel` live from a running instance via `HybrisTypeModelSource`, and the pure transforms behind it. Runs offline (prints setup guidance); set the env vars below to validate against a live instance. |
+
+Run example 03 against a local SAP Commerce / HAC instance:
+
+```bash
+COMMERCE_BASE_URL=https://localhost:9002 \
+COMMERCE_USER=admin COMMERCE_PASSWORD=nimda COMMERCE_INSECURE_TLS=true \
+npx tsx examples/03-live-model.ts
+```
+
 ## Roadmap
 
 - [x] Implement the core capability with real logic + unit tests.

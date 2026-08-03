@@ -69,6 +69,52 @@
   </div>
 </section>
 
+<section>
+  <div class="wrap">
+    <h2>Usage example</h2>
+    <p class="lead">Distilled from the runnable <span class="k">examples/</span> tutorials. The output below is the real captured stdout.</p>
+    <h3>Validate a script — clean vs. broken</h3>
+    <pre><code>import { validate } from "impex-lsp";
+
+// A structurally valid script → no diagnostics.
+const clean = [
+  "INSERT_UPDATE Product;code[unique=true];name[lang=en]",
+  ";PROD-001;Sample Product",
+].join("\n");
+console.log("clean:", validate(clean));
+
+// A value line with more cells than the header declares → one error.
+const broken = [
+  "INSERT_UPDATE Product;code[unique=true];name",
+  ";PROD-1;Widget;EXTRA-COLUMN",
+].join("\n");
+for (const d of validate(broken)) {
+  console.log(`[${d.severity}] line ${d.line} ${d.code}: ${d.message}`);
+}</code></pre>
+    <p class="lead">Output:</p>
+    <pre>clean: []
+[error] line 2 IMPEX_COLUMN_COUNT_MISMATCH: Value line has 3 field(s) but the header (line 1) declares 2 column(s).</pre>
+    <h3>Validate against a TypeModel — catch unknown attributes</h3>
+    <pre><code>import { validate, type TypeModel } from "impex-lsp";
+
+const model: TypeModel = {
+  Product: new Set(["code", "name", "catalogVersion"]),
+};
+
+// `colour` and `weight` aren't defined on Product → warnings.
+const script = [
+  "INSERT_UPDATE Product;code[unique=true];name;colour;weight",
+  ";PROD-1;Widget;red;3kg",
+].join("\n");
+for (const d of validate(script, model)) {
+  console.log(`[${d.severity}] line ${d.line} ${d.code}: ${d.message}`);
+}</code></pre>
+    <p class="lead">Output:</p>
+    <pre>[warning] line 1 IMPEX_UNKNOWN_ATTRIBUTE: Attribute "colour" is not defined on type "Product".
+[warning] line 1 IMPEX_UNKNOWN_ATTRIBUTE: Attribute "weight" is not defined on type "Product".</pre>
+  </div>
+</section>
+
 <footer><div class="wrap"><p>impex-lsp · MIT License · © 2026 Aliaksandr Tsviatkou<br/>Part of a backend tooling suite for SAP Commerce Cloud.</p></div></footer>
 </body>
 </html>
